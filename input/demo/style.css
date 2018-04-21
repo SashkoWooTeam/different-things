@@ -1,0 +1,81 @@
+.novi-input-number {
+    display: inline-block;
+    position: relative;
+    -webkit-user-select: none;
+    user-select: none;
+    border-radius: 3px;
+    width: 100%;
+    font-family: "Open Sans", sans-serif;
+}
+
+.novi-input-number input {
+    background: #171B23;
+    color: #FFFFFF;
+    width: 100%;
+    border-radius: 3px;
+    outline: none;
+    border: 1px solid #171B23;
+    height: 30px;
+    line-height: 16px;
+    font-size: 11px;
+    padding: 7px 12px;
+    box-sizing: border-box;
+    -webkit-user-select: initial;
+    user-select: initial;
+    padding-right: 20px;
+}
+
+.novi-input-number input[disabled] {
+    opacity: 0.7;
+    cursor: not-allowed;
+    user-focus: none;
+    user-select: none;
+
+}
+
+.novi-input-number input[type=number]::-webkit-inner-spin-button,
+.novi-input-number input[type=number]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+.novi-input-number input[type=number] {
+    -moz-appearance: textfield;
+}
+
+.novi-input-number-arrows svg {
+    width: 10px;
+    fill: #fff;
+    height: 10px;
+}
+
+.novi-input-number-arrows {
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: 20px;
+    height: 100%;
+    font-size: 0;
+    cursor: pointer;
+}
+.novi-input-number input[disabled] + .novi-input-number-arrows{
+    cursor: not-allowed;
+    pointer-events: none;
+}
+.novi-input-number-arrow-up {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 20px;
+    text-align: center;
+    padding-top: 3px;
+}
+
+.novi-input-number-arrow-down {
+    bottom: 0;
+    position: absolute;
+    right: 0;
+    width: 20px;
+    padding-bottom: 3px;
+    text-align: center;
+}
