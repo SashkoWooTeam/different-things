@@ -1,41 +1,92 @@
 import React, {Component} from 'react'
 
-class CustomNumberInput extends Component {
+export default class CustomNumberInput extends Component {
     constructor(props) {
         super(props);
 
+        let value = this._setValueIntoRange.bind(this);
         this.state = {
-            value: '0',
+            value: props.value || '0',
         };
+
+        this.minValue = props.minValue;
+        this.maxValue = props.maxValue;
+        this.disabled = props.disabled;
+        this.onlyInteger = props.onlyInteger;
 
         this.allowedValue = ['-', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9'];
 
-        this.onChanged = this.onChanged.bind(this);
-        this.onKeyDown = this.onKeyDown.bind(this);
-        this.incrementValue = this.incrementValue.bind(this);
-        this.decrementValue = this.decrementValue.bind(this);
+        this._onChanged = this._onChanged.bind(this);
+        this._onKeyDown = this._onKeyDown.bind(this);
+        this._incrementValue = this._incrementValue.bind(this);
+        this._decrementValue = this._decrementValue.bind(this);
     }
 
-    onChanged(e) {
+    render() {
+        return (
+            <div className="novi-input-number">
+                <input
+                    className="novi-input-number"
+                    onChange={this._onChanged}
+                    _onKeyDown={this._onKeyDown}
+                    value={this.state.value}
+                    {...this.props.input}
+                />
+                <div className="novi-input-number-arrows">
+                    <div className="novi-input-number-arrow-up" onClick={this._incrementValue}>
+                        <svg viewBox="0 0 20 20">
+                            <path
+                                d="M0 15c0 0.128 0.049 0.256 0.146 0.354 0.195 0.195 0.512 0.195 0.707 0l8.646-8.646 8.646 8.646c0.195 0.195 0.512 0.195 0.707 0s0.195-0.512 0-0.707l-9-9c-0.195-0.195-0.512-0.195-0.707 0l-9 9c-0.098 0.098-0.146 0.226-0.146 0.354z"></path>
+                        </svg>
+                    </div>
+                    <div className="novi-input-number-arrow-down" onClick={this._decrementValue}>
+                        <svg viewBox="0 0 20 20">
+                            <path
+                                d="M0 6c0-0.128 0.049-0.256 0.146-0.354 0.195-0.195 0.512-0.195 0.707 0l8.646 8.646 8.646-8.646c0.195-0.195 0.512-0.195 0.707 0s0.195 0.512 0 0.707l-9 9c-0.195 0.195-0.512 0.195-0.707 0l-9-9c-0.098-0.098-0.146-0.226-0.146-0.354z"></path>
+                        </svg>
+                    </div>
+                </div>
+            </div>
+        )
+    }
+
+    _setValueIntoRange(value) {
+        let value, min, max;
+        value = this.state.value;
+        min = this.minValue;
+        max = this.maxValue;
+
+        if (min !== undefined && min > value) {
+            return min;
+        }
+
+        if (max !== undefined && max < value) {
+            return max;
+        }
+
+        return value;
+    }
+
+    _onChanged(e) {
         this.state.value = e.target.value;
-        this.validateValue();
+        this._validateValue();
         this.setState({value: this.state.value});
     }
 
-    onKeyDown(e) {
+    _onKeyDown(e) {
         let keyCode = e.keyCode;
 
         switch (true) {
             case keyCode === 40:
-                this.decrementValue(e);
+                this._decrementValue(e);
                 break;
             case keyCode === 38:
-                this.incrementValue(e);
+                this._incrementValue(e);
         }
 
     }
 
-    validateValue() {
+    _validateValue() {
         let value = this.state.value.split('');
         let allowedValue = this.allowedValue;
         let newValue = [];
@@ -63,7 +114,7 @@ class CustomNumberInput extends Component {
         this.state.value = newValue.toString();
     }
 
-    incrementValue(e) {
+    _incrementValue(e) {
         let value = parseInt(this.state.value);
 
         switch (true) {
@@ -81,11 +132,11 @@ class CustomNumberInput extends Component {
         }
 
         this.state.value = value.toString();
-        this.validateValue();
+        this._validateValue();
         this.setState({value: this.state.value});
     }
 
-    decrementValue(e) {
+    _decrementValue(e) {
         let value = parseInt(this.state.value);
 
         switch (true) {
@@ -103,37 +154,7 @@ class CustomNumberInput extends Component {
         }
 
         this.state.value = value.toString();
-        this.validateValue();
+        this._validateValue();
         this.setState({value: this.state.value});
     }
-
-    render() {
-        return (
-            <div className="novi-input-number">
-                <input
-                    className="novi-input-number"
-                    onChange={this.onChanged}
-                    onKeyDown={this.onKeyDown}
-                    value={this.state.value}
-                    {...this.props}
-                />
-                <div className="novi-input-number-arrows">
-                    <div className="novi-input-number-arrow-up" onClick={this.incrementValue}>
-                        <svg viewBox="0 0 20 20">
-                            <path
-                                d="M0 15c0 0.128 0.049 0.256 0.146 0.354 0.195 0.195 0.512 0.195 0.707 0l8.646-8.646 8.646 8.646c0.195 0.195 0.512 0.195 0.707 0s0.195-0.512 0-0.707l-9-9c-0.195-0.195-0.512-0.195-0.707 0l-9 9c-0.098 0.098-0.146 0.226-0.146 0.354z"></path>
-                        </svg>
-                    </div>
-                    <div className="novi-input-number-arrow-down" onClick={this.decrementValue}>
-                        <svg viewBox="0 0 20 20">
-                            <path
-                                d="M0 6c0-0.128 0.049-0.256 0.146-0.354 0.195-0.195 0.512-0.195 0.707 0l8.646 8.646 8.646-8.646c0.195-0.195 0.512-0.195 0.707 0s0.195 0.512 0 0.707l-9 9c-0.195 0.195-0.512 0.195-0.707 0l-9-9c-0.098-0.098-0.146-0.226-0.146-0.354z"></path>
-                        </svg>
-                    </div>
-                </div>
-            </div>
-        )
-    }
 }
-
-export default CustomNumberInput

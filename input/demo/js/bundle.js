@@ -829,6 +829,8 @@ module.exports = containsNode;
 "use strict";
 
 
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
 var _react = __webpack_require__(3);
 
 var _react2 = _interopRequireDefault(_react);
@@ -841,7 +843,18 @@ var _noviInputNumber2 = _interopRequireDefault(_noviInputNumber);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-(0, _reactDom.render)(_react2.default.createElement(_noviInputNumber2.default, { placeholder: 'Text' }), document.getElementById('app'));
+var defaultData = {
+    value: 23,
+    maxValue: 55,
+    minValue: -100,
+    onlyInteger: true,
+    disabled: false,
+    input: {
+        placeholder: "Insert a number"
+    }
+};
+
+(0, _reactDom.render)(_react2.default.createElement(_noviInputNumber2.default, _extends({ placeholder: 'Text' }, defaultData)), document.getElementById('app'));
 
 /***/ }),
 /* 13 */
